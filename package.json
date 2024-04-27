@@ -22,5 +22,13 @@
   "bugs": {
     "url": "https://github.com/sudiptab2100/libp2p-pubsub/issues"
   },
-  "homepage": "https://github.com/sudiptab2100/libp2p-pubsub#readme"
+  "homepage": "https://github.com/sudiptab2100/libp2p-pubsub#readme",
+  "dependencies": {
+    "@chainsafe/libp2p-noise": "^15.0.0",
+    "@libp2p/mplex": "^10.0.21",
+    "@libp2p/tcp": "^9.0.23",
+    "@libp2p/websockets": "^8.0.21",
+    "@multiformats/multiaddr": "^12.2.1",
+    "libp2p": "^1.4.3"
+  }
 }
