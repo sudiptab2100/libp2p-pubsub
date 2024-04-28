@@ -2,7 +2,7 @@ import { createLibp2p } from "libp2p";
 import { webSockets } from "@libp2p/websockets";
 import { tcp } from "@libp2p/tcp";
 import { mplex } from "@libp2p/mplex";
-import { noise } from "@chainsafe/libp2p-noise";
+import { noise } from "@libp2p/noise";
 import { multiaddr } from "@multiformats/multiaddr";
 import { kadDHT, removePrivateAddressesMapper, removePublicAddressesMapper } from "@libp2p/kad-dht";
 import { mdns } from "@libp2p/mdns";
