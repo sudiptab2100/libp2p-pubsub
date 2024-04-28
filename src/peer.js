@@ -8,6 +8,8 @@ import { kadDHT, removePrivateAddressesMapper, removePublicAddressesMapper } fro
 import { mdns } from "@libp2p/mdns";
 import { bootstrap } from "@libp2p/bootstrap";
 import { identify } from "@libp2p/identify";
+import { gossipsub } from "@chainsafe/libp2p-gossipsub";
+import { dcutr } from "@libp2p/dcutr";
 
 
 const getNode = async () => {
@@ -45,7 +47,14 @@ const getNode = async () => {
                 tagTTL: 120000 // in ms
             })
         ],
+        connectionGater: {
+            denyDialMultiaddr: () => {
+                return false;
+            }
+        },
         services: {
+            pubsub: gossipsub(),
+            dcutr: dcutr(),
             dht: mdns(),
             aminoDHT: kadDHT({
                 protocol: '/ipfs/kad/1.0.0',
