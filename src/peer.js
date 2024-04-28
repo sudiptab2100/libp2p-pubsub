@@ -75,6 +75,11 @@ const getNode = async () => {
         console.log('found peer: ', evt.detail.id)
     });
     
+    node.addEventListener('peer:connect', (evt) => {
+        const remotePeer = evt.detail;
+        console.log('connected to: ' + remotePeer.toString());
+    });
+    
     node.addEventListener('self:peer:update', () => {
         var isFirst = true;
         node.getMultiaddrs().forEach((addr) => {
@@ -86,7 +91,22 @@ const getNode = async () => {
         });
     });
     
+    node.services.pubsub.addEventListener('message', event => {
+        const topic = event.detail.topic;
+        const message = new TextDecoder().decode(event.detail.data);
+        console.log(`Message received on topic '${topic}': ${message}`);
+    });
+    
     return node;
+}
+
+const publish = async (node, topic, message) => {
+    const uint8_msg = new TextEncoder().encode(message);
+    await node.services.pubsub.publish(topic, uint8_msg);
+}
+
+const subscribe = async (node, topic) => {
+    await node.services.pubsub.subscribe(topic);
 }
 
 const main = async () => {
