@@ -10,6 +10,7 @@ import { bootstrap } from "@libp2p/bootstrap";
 import { identify } from "@libp2p/identify";
 import { gossipsub } from "@chainsafe/libp2p-gossipsub";
 import { dcutr } from "@libp2p/dcutr";
+import { autoNAT } from "@libp2p/autonat";
 
 
 const getNode = async () => {
@@ -53,17 +54,24 @@ const getNode = async () => {
             }
         },
         services: {
+            // peerDiscovery: [],
+            autoNAT: autoNAT(),
             pubsub: gossipsub(),
             dcutr: dcutr(),
             dht: mdns(),
             aminoDHT: kadDHT({
                 protocol: '/ipfs/kad/1.0.0',
-                peerInfoMapper: removePrivateAddressesMapper
+                peerInfoMapper: removePrivateAddressesMapper,
+                kBucketSize: 20,
+                allowQueryWithZeroPeers: true,
+                
             }),
             lanDHT: kadDHT({
                 protocol: '/ipfs/lan/kad/1.0.0',
                 peerInfoMapper: removePublicAddressesMapper,
-                clientMode: false
+                clientMode: false,
+                kBucketSize: 20,
+                allowQueryWithZeroPeers: true,
             }),
             identify: identify({
                 runOnTransientConnection: true
